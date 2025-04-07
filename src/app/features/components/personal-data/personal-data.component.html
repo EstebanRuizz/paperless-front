@@ -1,0 +1,46 @@
+<form [formGroup]="cvForm" (ngSubmit)="onSubmit()" class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 space-y-6">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Datos Personales</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Nombre completo -->
+        <div>
+            <label class="block text-gray-700 font-medium mb-1">Nombre completo *</label>
+            <input type="text" formControlName="fullName" class="input" />
+            <p *ngIf="f.fullName.touched && f.fullName.invalid" class="text-red-500 text-sm">Campo requerido.</p>
+        </div>
+
+        <!-- Correo electrónico -->
+        <div>
+            <label class="block text-gray-700 font-medium mb-1">Correo electrónico *</label>
+            <input type="email" formControlName="email" class="input" />
+            <p *ngIf="f.email.touched && f.email.invalid" class="text-red-500 text-sm">
+                {{ f['email'].errors?.['required'] ? 'Campo requerido.' : 'Correo inválido.' }}
+            </p>
+        </div>
+
+        <!-- Teléfono -->
+        <div>
+            <label class="block text-gray-700 font-medium mb-1">Teléfono *</label>
+            <input type="tel" formControlName="phone" class="input" />
+            <p *ngIf="f.phone.touched && f.phone.invalid" class="text-red-500 text-sm">Campo requerido.</p>
+        </div>
+
+        <!-- Dirección -->
+        <div>
+            <label class="block text-gray-700 font-medium mb-1">Dirección</label>
+            <input type="text" formControlName="address" class="input" />
+        </div>
+    </div>
+
+    <!-- Perfil profesional -->
+    <div class="mt-6">
+        <label class="block text-gray-700 font-medium mb-1">Perfil profesional (breve descripción) *</label>
+        <textarea rows="4" formControlName="profile" class="input"></textarea>
+        <p *ngIf="f.profile.touched && f.profile.invalid" class="text-red-500 text-sm">Campo requerido para el formulario</p>
+    </div>
+
+    <!-- Botón de enviar -->
+    <div class="text-center">
+        <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transition font-medium">Generar CV</button>
+    </div>
+</form>

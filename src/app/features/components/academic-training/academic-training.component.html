@@ -1,0 +1,40 @@
+<section class="min-h-screen flex flex-col items-center justify-start px-6 md:px-16 py-12 bg-gray-50">
+    <div class="max-w-3xl w-full text-center space-y-4 mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Formación Académica</h1>
+    </div>
+
+    <form [formGroup]="academicForm" (ngSubmit)="onSubmit()" class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Título obtenido -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Título obtenido *</label>
+                <input formControlName="degree" type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2" />
+                <div *ngIf="f['degree'].touched && f['degree'].invalid" class="text-red-500 text-sm mt-1">Campo obligatorio.</div>
+            </div>
+
+            <!-- Institución -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Institución *</label>
+                <input formControlName="institution" type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2" />
+                <div *ngIf="f['institution'].touched && f['institution'].invalid" class="text-red-500 text-sm mt-1">Campo obligatorio.</div>
+            </div>
+
+            <!-- Fecha inicio -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Fecha inicio</label>
+                <input formControlName="startDate" type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2" />
+            </div>
+
+            <!-- Fecha fin -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Fecha fin</label>
+                <input formControlName="endDate" type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2" />
+            </div>
+        </div>
+
+        <!-- Botón de enviar -->
+        <div class="text-center pt-6">
+            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transition font-medium">Guardar Formación</button>
+        </div>
+    </form>
+</section>
