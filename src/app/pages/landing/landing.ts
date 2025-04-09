@@ -22,7 +22,7 @@ import { FooterWidget } from './components/footerwidget';
                 <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 leading-tight">Digitaliza tu <br class="hidden md:inline" />CV</h2>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <button class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition" routerLink="/interview">Hacer entrevista</button>
-                    <button class="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 transition">Subir archivo</button>
+                    <button class="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 transition" routerLink="/personal-data">Subir archivo</button>
                     <button class="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 transition">Tomar foto</button>
                 </div>
             </div>

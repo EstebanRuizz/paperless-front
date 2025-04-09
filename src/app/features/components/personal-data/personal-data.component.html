@@ -1,46 +1,28 @@
-<form [formGroup]="cvForm" (ngSubmit)="onSubmit()" class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 space-y-6">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Datos Personales</h2>
+<div class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">🖼️ OCR Image Upload</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Nombre completo -->
-        <div>
-            <label class="block text-gray-700 font-medium mb-1">Nombre completo *</label>
-            <input type="text" formControlName="fullName" class="input" />
-            <p *ngIf="f.fullName.touched && f.fullName.invalid" class="text-red-500 text-sm">Campo requerido.</p>
-        </div>
+    <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+    />
 
-        <!-- Correo electrónico -->
-        <div>
-            <label class="block text-gray-700 font-medium mb-1">Correo electrónico *</label>
-            <input type="email" formControlName="email" class="input" />
-            <p *ngIf="f.email.touched && f.email.invalid" class="text-red-500 text-sm">
-                {{ f['email'].errors?.['required'] ? 'Campo requerido.' : 'Correo inválido.' }}
-            </p>
-        </div>
+    <div *ngIf="isLoading" class="mt-4 text-blue-600 animate-pulse">⏳ Processing image, please wait...</div>
 
-        <!-- Teléfono -->
-        <div>
-            <label class="block text-gray-700 font-medium mb-1">Teléfono *</label>
-            <input type="tel" formControlName="phone" class="input" />
-            <p *ngIf="f.phone.touched && f.phone.invalid" class="text-red-500 text-sm">Campo requerido.</p>
-        </div>
+    <div *ngIf="extractedText" class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">📄 Extracted Text:</h3>
+        <pre class="whitespace-pre-wrap bg-gray-100 p-4 rounded border border-gray-300 text-sm text-gray-800">
+  {{ extractedText }}
+      </pre
+        >
 
-        <!-- Dirección -->
-        <div>
-            <label class="block text-gray-700 font-medium mb-1">Dirección</label>
-            <input type="text" formControlName="address" class="input" />
-        </div>
+        <button
+        (click)="generateCV()"
+        class="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition"
+      >
+        🧾 Generate CV
+      </button>
+
     </div>
-
-    <!-- Perfil profesional -->
-    <div class="mt-6">
-        <label class="block text-gray-700 font-medium mb-1">Perfil profesional (breve descripción) *</label>
-        <textarea rows="4" formControlName="profile" class="input"></textarea>
-        <p *ngIf="f.profile.touched && f.profile.invalid" class="text-red-500 text-sm">Campo requerido para el formulario</p>
-    </div>
-
-    <!-- Botón de enviar -->
-    <div class="text-center">
-        <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transition font-medium">Generar CV</button>
-    </div>
-</form>
+</div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import jsPDF from 'jspdf';
 
@@ -17,10 +17,20 @@ export class InterviewComponent {
     constructor(
         private readonly fb: FormBuilder,
         private readonly http: HttpClient,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly route: ActivatedRoute
     ) {}
 
     public ngOnInit(): void {
+        const orcId = this.route.snapshot.paramMap.get('orcId');
+        if (orcId) {
+            console.log('Interview for ORCID:', orcId);
+            // Load specific interview data
+        } else {
+            console.log('General interview route');
+            // Show general view
+        }
+
         this.form = this.fb.group({
             fullName: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
@@ -76,46 +86,45 @@ export class InterviewComponent {
             }
         });
 
-        this.generateCV()
+        this.generateCV();
     }
 
     private generateCV(): void {
-      const doc = new jsPDF();
-  
-      doc.setFontSize(18);
-      doc.text('Curriculum Vitae', 20, 20);
-  
-      doc.setFontSize(12);
-      let y = 30;
-      const lineHeight = 8;
-  
-      const lines = [
-          `Full Name: ${this.form.value.fullName}`,
-          `Email: ${this.form.value.email}`,
-          `Phone: ${this.form.value.phone}`,
-          `Address: ${this.form.value.address}`,
-          `Profile: ${this.form.value.profile}`,
-          '',
-          'Education:',
-          ` - ${this.form.value.degree} at ${this.form.value.institution}`,
-          `   (${this.form.value.startDate} - ${this.form.value.endDate})`,
-          '',
-          'Work Experience:',
-          ` - ${this.form.value.position} at ${this.form.value.company}`,
-          `   (${this.form.value.startDateJob} - ${this.form.value.endDateJob})`,
-          '',
-          `Skills: ${this.form.value.professionalSkills}`,
-          `Languages: ${this.form.value.languages}`
-      ];
-  
-      for (const line of lines) {
-          doc.text(line, 20, y);
-          y += lineHeight;
-      }
-  
-      doc.save(`${this.form.value.fullName.replace(/\s+/g, '_')}_CV.pdf`);
-  }
-  
+        const doc = new jsPDF();
+
+        doc.setFontSize(18);
+        doc.text('Curriculum Vitae', 20, 20);
+
+        doc.setFontSize(12);
+        let y = 30;
+        const lineHeight = 8;
+
+        const lines = [
+            `Full Name: ${this.form.value.fullName}`,
+            `Email: ${this.form.value.email}`,
+            `Phone: ${this.form.value.phone}`,
+            `Address: ${this.form.value.address}`,
+            `Profile: ${this.form.value.profile}`,
+            '',
+            'Education:',
+            ` - ${this.form.value.degree} at ${this.form.value.institution}`,
+            `   (${this.form.value.startDate} - ${this.form.value.endDate})`,
+            '',
+            'Work Experience:',
+            ` - ${this.form.value.position} at ${this.form.value.company}`,
+            `   (${this.form.value.startDateJob} - ${this.form.value.endDateJob})`,
+            '',
+            `Skills: ${this.form.value.professionalSkills}`,
+            `Languages: ${this.form.value.languages}`
+        ];
+
+        for (const line of lines) {
+            doc.text(line, 20, y);
+            y += lineHeight;
+        }
+
+        doc.save(`${this.form.value.fullName.replace(/\s+/g, '_')}_CV.pdf`);
+    }
 
     get f() {
         return this.form.controls;

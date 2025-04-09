@@ -6,21 +6,28 @@ import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { InterviewComponent } from './app/features/components/interview/interview.component';
 import { AcademicTrainingComponent } from './app/features/components/academic-training/academic-training.component';
+import { PersonalDataComponent } from './app/features/components/personal-data/personal-data.component';
 
 export const appRoutes: Routes = [
-    {
-        path: '',
-        component: AppLayout,
-        children: [
-            { path: '', component: Dashboard },
-            { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
-            { path: 'documentation', component: Documentation },
-            { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
-        ]
-    },
+    // {
+    //     path: '',
+    //     component: AppLayout,
+    //     children: [
+    //         { path: '', component: Dashboard },
+    //         { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
+    //         { path: 'documentation', component: Documentation },
+    //         { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
+    //     ]
+    // },
+    // { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
+    { path: '', component: Landing },
     { path: 'interview', component: InterviewComponent },
+    {
+        path: 'interview/:orcId',
+        component: InterviewComponent
+    },
+    { path: 'personal-data', component: PersonalDataComponent },
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
-    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
 ];
