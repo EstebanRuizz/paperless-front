@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { APIResponse } from '../../interfaces/APIResponse';
+import { environment } from '../../../../environment';
 
 @Component({
     selector: 'app-picture',
@@ -19,8 +21,8 @@ export class PictureComponent implements AfterViewInit {
     isExtractingText: boolean = false;
 
     public constructor(
-            private readonly http: HttpClient,
-            private readonly router: Router
+        private readonly http: HttpClient,
+        private readonly router: Router
     ) {}
 
     ngAfterViewInit() {
@@ -71,7 +73,22 @@ export class PictureComponent implements AfterViewInit {
             });
     }
 
-    goHome() {
+    public goHome(): void {
         this.router.navigate(['']);
+    }
+
+    public generateCV() {
+        this.http
+            .post<APIResponse<{ Id: string }>>(`${environment.apiUrl}/curriculum/cv-orc`, {
+                Text: this.extractedText
+            })
+            .subscribe({
+                next: (response) => {
+                    this.router.navigate(['interview', response.data.pop()?.Id]);
+                },
+                error: (error) => {
+                    console.error('Error submitting form:', error);
+                }
+            });
     }
 }
