@@ -23,7 +23,7 @@ import { FooterWidget } from './components/footerwidget';
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <button class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition" routerLink="/interview">Hacer entrevista</button>
                     <button class="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 transition" routerLink="/personal-data">Subir archivo</button>
-                    <button class="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 transition">Tomar foto</button>
+                    <button class="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 transition" routerLink="/take-picture">Tomar foto</button>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@ import { FooterWidget } from './components/footerwidget';
                 <div class="bg-gray-50 p-4 rounded-xl text-center text-gray-700 text-sm max-w-md">
                     <p>
                         Digitaliza y guarda de forma rápida tu hoja de vida<br />
-                        Sube un archivo o responde unas preguntas para generar tu CV Digital
+                        Sube un archivo o responde unas preguntas para generar tu CV Digital!
                     </p>
                 </div>
             </div>

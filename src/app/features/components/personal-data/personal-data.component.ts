@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Tesseract from 'tesseract.js';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environment';
+import { APIResponse } from '../../interfaces/APIResponse';
 
 @Component({
     selector: 'app-personal-data',
@@ -27,6 +29,10 @@ export class PersonalDataComponent {
         }
     }
 
+    public goHome(): void {
+        this.router.navigate(['']);
+    }
+
     protected runOCR(file: File) {
         this.isLoading = true;
         Tesseract.recognize(file, 'spa', {
@@ -43,7 +49,17 @@ export class PersonalDataComponent {
     }
 
     public generateCV() {
-        console.log('Generate CV clicked. Text:', this.extractedText);
-        // You can now format this text and send it to a backend or generate a PDF!
+        this.http
+            .post<APIResponse<{ Id: string }>>(`${environment.apiUrl}/curriculum/cv-orc`, {
+                Text: this.extractedText
+            })
+            .subscribe({
+                next: (response) => {
+                    this.router.navigate(['interview', response.data.pop()?.Id]);
+                },
+                error: (error) => {
+                    console.error('Error submitting form:', error);
+                }
+            });
     }
 }

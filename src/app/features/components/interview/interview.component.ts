@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import jsPDF from 'jspdf';
+import { environment } from '../../../../environment';
+import { APIResponse } from '../../interfaces/APIResponse';
+import { ICvOCRDataDTO } from '../../interfaces/ICvOCRDataDTO';
 
 @Component({
     selector: 'app-interview',
@@ -24,8 +27,7 @@ export class InterviewComponent {
     public ngOnInit(): void {
         const orcId = this.route.snapshot.paramMap.get('orcId');
         if (orcId) {
-            console.log('Interview for ORCID:', orcId);
-            // Load specific interview data
+            this.loadOCRPreData(orcId);
         } else {
             console.log('General interview route');
             // Show general view
@@ -52,6 +54,43 @@ export class InterviewComponent {
         });
     }
 
+    private loadOCRPreData(orcId: string) {
+        this.http
+            .get<APIResponse<ICvOCRDataDTO>>(`${environment.apiUrl}/curriculum/cv-orc/${orcId}`)
+            .subscribe({
+                next: (response) => {
+                    console.log(response);
+                    
+                    const data = response.data.pop();
+                    if (data && data.Text) {
+                        const parsed = JSON.parse(data.Text);
+                        this.form.patchValue({
+                            fullName: parsed.fullName,
+                            email: parsed.email,
+                            phone: parsed.phone,
+                            address: parsed.address,
+                            profile: parsed.profile,
+                            degree: parsed.degree,
+                            institution: parsed.institution,
+                            startDate: parsed.startDateStudy,
+                            endDate: parsed.endDateStudy,
+                            position: parsed.position,
+                            company: parsed.company,
+                            startDateJob: parsed.startDateJob,
+                            endDateJob: parsed.endDateJob,
+                            currentJob: parsed.currentJob ? true : false,
+                            responsibilities: parsed.professionalSkills,
+                            professionalSkills: parsed.professionalSkills,
+                            languages: parsed.languages
+                        });
+                    }
+                },
+                error: (error) => {
+                    console.error('Error submitting form:', error);
+                }
+            });
+    }
+
     public onSubmit(): void {
         console.log(this.form.value);
         if (this.form.invalid) {
@@ -76,7 +115,7 @@ export class InterviewComponent {
             languages: this.form.value.languages
         };
 
-        this.http.post('http://localhost:3003/curriculum', formData).subscribe({
+        this.http.post(`${environment.apiUrl}/curriculum`, formData).subscribe({
             next: (response) => {
                 console.log('Successfully submitted:', response);
                 this.router.navigate(['landing']);
@@ -87,6 +126,10 @@ export class InterviewComponent {
         });
 
         this.generateCV();
+    }
+    
+    public goHome(): void {
+      this.router.navigate(['']);
     }
 
     private generateCV(): void {
