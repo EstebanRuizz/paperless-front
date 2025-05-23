@@ -1,0 +1,62 @@
+<!-- <div class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+  <h2 class="text-2xl font-bold mb-4 text-gray-800">📷 Take a Picture</h2>
+
+  <video #video autoplay playsinline class="w-full rounded mb-4 border border-gray-300"></video>
+
+  <button
+    (click)="capture()"
+    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+  >
+    📸 Capture Photo
+  </button>
+
+  <canvas #canvas class="hidden"></canvas>
+
+  <div *ngIf="photoDataUrl" class="mt-6">
+    <h3 class="text-lg font-semibold text-gray-700 mb-2">🖼️ Captured Image:</h3>
+    <img [src]="photoDataUrl" alt="Captured" class="rounded border border-gray-300" />
+  </div>
+</div> -->
+
+<section class="min-h-screen flex flex-col items-center justify-start px-6 md:px-16 py-12 bg-gray-50">
+    <div class="w-full max-w-3xl mb-6">
+      <button 
+        (click)="goHome()" 
+        class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition text-sm"
+        >
+          ← Volver al inicio
+      </button>
+    </div>
+
+
+    <div class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">📷 Take a Picture</h2>
+    
+      <video #video autoplay playsinline class="w-full rounded mb-4 border border-gray-300"></video>
+    
+      <button
+        (click)="capture()"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+      >
+        📸 Capture Photo
+      </button>
+    
+      <canvas #canvas class="hidden"></canvas>
+    
+      <div *ngIf="photoDataUrl" class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">🖼️ Captured Image:</h3>
+        <img [src]="photoDataUrl" alt="Captured" class="rounded border border-gray-300" />
+      </div>
+    
+      <div *ngIf="isExtractingText" class="mt-4 text-blue-600 animate-pulse">
+        ⏳ Running OCR, please wait...
+      </div>
+    
+      <div *ngIf="extractedText" class="mt-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">📄 Extracted Text:</h3>
+        <pre class="whitespace-pre-wrap bg-gray-100 p-4 rounded border border-gray-300 text-sm text-gray-800">
+            {{ extractedText }}
+        </pre>
+      </div>
+    </div>
+</section>
